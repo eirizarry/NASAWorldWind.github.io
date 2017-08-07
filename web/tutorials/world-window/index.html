@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="NASA WorldWind Software Development Kits (SDKs) for geo-spatial 3D virtual
+        globe visualization via OpenGL/WebGL on Android, Java and JavaScript/HTML5 platforms.">
+        <link rel="icon" href="/img/favicon.ico" type="image/x-icon"/>
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/css/theme.css">
+        <title>
+            WorldWindow
+        </title>
+    </head>
+    <body>
+             
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="/"><img id="logo-size" src="/img/nasa-logo.svg" alt="Meatball"/></a>
+                    <a class="navbar-brand" href="/">NASA WorldWind</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/web">Web</a></li>
+                        <li><a href="/android">Android</a></li>
+                        <li><a href="/java">Java</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        
+    <div class="container">
+    <h2>Web WorldWind</h2>
+</div>
+<hr>
+<div class="container">
+    <div class="row row-centered">
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/">Home</a>
+        </div>            
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/get-started/">Get Started</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/features/">Features</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/examples/">Examples</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/tutorials/">Tutorials</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/docs/">Docs</a>
+        </div>
+    </div>
+</div>
+<hr>
+    <div class="container">
+        
+
+<h2 id="worldwindow">WorldWindow</h2>
+
+<p>WorldWindow is the fundamental Web WorldWind object. It represents the presence of Web WorldWind in the web page. Almost all interactions between the app and Web WorldWind occur through a WorldWindow.</p>
+
+<p>A WorldWindow encapsulates an HTML canvas element. The app developer is responsible for creating the canvas, typically by defining a <code>&lt;canvas&gt;</code> element in static HTML. The canvas is given an ID and that ID is handed to the WorldWindow constructor to tell the WorldWindow its drawing surface. The WorldWindow directs all drawing to that canvas. Here’s an example of creating a WorldWindow for a canvas whose ID is “canvasOne”:</p>
+
+<pre><code class="language-javascript">var wwd = new WorldWind.WorldWindow(&quot;canvasOne&quot;);
+</code></pre>
+
+<p>The canvas, itself, is defined in the associated HTML page as follows:</p>
+
+<pre><code class="language-html">&lt;div style=&quot;position:relative&quot;&gt;
+    &lt;canvas id=&quot;canvasOne&quot; width=&quot;1000&quot; height=&quot;1000&quot; style=&quot;width: 100%; height: auto&quot;&gt;
+    &lt;/canvas&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>Here the canvas is given an initial width and height of 1000 pixels, but the style element causes it to resize to the width of the containing <code>&lt;div&gt;</code> when displayed, and maintain the initial aspect ratio.</p>
+
+<p>A web page may contain multiple WorldWindows. Each encapsulates a separate canvas and operates independently of the others.</p>
+
+<p>A WorldWindow contains a Globe, a Navigator and a Layer List. These are all created automatically during construction of the WorldWindow object. The globe and navigator may subsequently be replaced by the app if desired. The layer list holds all layers displayed in that WorldWindow, but it is initially empty. The first thing most apps do is populate it with one or more imagery layers.</p>
+
+<p>The WorldWindow manages the display of the virtual globe or 2D map. Apps need do nothing but add layers and perhaps shapes and initiate redraws when it does so. Behind the scenes, the WorldWindow retrieves imagery and elevation from the internet as needed, generates 3D terrain, and traverses the layer list to display its contents. Its associated navigator translates user input to movements of the globe.</p>
+
+<p>Picking is also provided by the WorldWindow. See this developer’s guide’s section on <a href="/web/tutorials/picking/">Picking</a> for more information.</p>
+
+<h2 id="changing-the-view">Changing the View</h2>
+
+<p>See the <a href="/web/tutorials/navigation-and-viewing/">Navigation and Viewing</a> page to learn how to make the WorldWindow look at a different location on the globe or to otherwise modify its view.</p>
+
+<h2 id="event-listeners">Event Listeners</h2>
+
+<p>A WorldWindow manages all event handlers associated with its canvas. Rather than specifying event handlers directly on the canvas, apps should establish them on the WorldWindow so that it may coordinate event handling with its own. The call to register event handlers is the same as it would be to define event handlers anywhere:</p>
+
+<pre><code class="language-javascript">wwd.addEventListener(&quot;mousemove&quot;, function (event) {...});
+</code></pre>
+
+<p>or for a mobile device:</p>
+
+<pre><code class="language-javascript">window.addEventListener(&quot;touchstart&quot;, function (event) {...});
+</code></pre>
+
+    </div>
+
+       
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </body>
+</html>

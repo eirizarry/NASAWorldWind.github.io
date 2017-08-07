@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="NASA WorldWind Software Development Kits (SDKs) for geo-spatial 3D virtual
+        globe visualization via OpenGL/WebGL on Android, Java and JavaScript/HTML5 platforms.">
+        <link rel="icon" href="/img/favicon.ico" type="image/x-icon"/>
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/css/theme.css">
+        <title>
+            Deployment
+        </title>
+    </head>
+    <body>
+             
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="/"><img id="logo-size" src="/img/nasa-logo.svg" alt="Meatball"/></a>
+                    <a class="navbar-brand" href="/">NASA WorldWind</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/web">Web</a></li>
+                        <li><a href="/android">Android</a></li>
+                        <li><a href="/java">Java</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        
+    <div class="container">
+    <h2>Web WorldWind</h2>
+</div>
+<hr>
+<div class="container">
+    <div class="row row-centered">
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/">Home</a>
+        </div>            
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/get-started/">Get Started</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/features/">Features</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/examples/">Examples</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/tutorials/">Tutorials</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/docs/">Docs</a>
+        </div>
+    </div>
+</div>
+<hr>
+    <div class="container">
+        
+
+<h2 id="deployment">Deployment</h2>
+
+<p>Deploying Web WorldWind is easy. In fact, unless you want to run it from your own server there is no deployment required. You simply include a script tag linking to it:</p>
+
+<pre><code class="language-html">&lt;script src=&quot;http://worldwindserver.net/webworldwind/worldwindlib.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+</code></pre>
+
+<p>To deploy Web WorldWind on your own server, copy the library worldwindlib.js and the images directory from the Web WorldWind release and place them on your web server. The images directory must be a sibling of the library, i.e., exist in the same directory. These files are included in the release zip file.</p>
+
+<h2 id="running-locally">Running Locally</h2>
+
+<p>If you do not already have a web server, you can use Python‘s built in HTTP server.</p>
+
+<p>With Python installed on your computer, change directory to the top-level Web WorldWind directory and run the Python HTTP server:</p>
+
+<pre><code>python -m SimpleHTTPServer
+</code></pre>
+
+<p>Or if using Python 3:</p>
+
+<pre><code>python -m http.server 8000
+</code></pre>
+
+<p>Then browse to</p>
+
+<pre><code>http://localhost:8000/examples/BasicExample.html
+</code></pre>
+
+<p>and you should see that Web WorldWind example in your web browser.</p>
+
+    </div>
+
+       
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </body>
+</html>

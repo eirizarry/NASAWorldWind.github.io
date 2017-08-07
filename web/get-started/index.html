@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="NASA WorldWind Software Development Kits (SDKs) for geo-spatial 3D virtual
+        globe visualization via OpenGL/WebGL on Android, Java and JavaScript/HTML5 platforms.">
+        <link rel="icon" href="/img/favicon.ico" type="image/x-icon"/>
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/css/theme.css">
+        <title>
+            Web WorldWind Get Started
+        </title>
+    </head>
+    <body>
+             
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="/"><img id="logo-size" src="/img/nasa-logo.svg" alt="Meatball"/></a>
+                    <a class="navbar-brand" href="/">NASA WorldWind</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/web">Web</a></li>
+                        <li><a href="/android">Android</a></li>
+                        <li><a href="/java">Java</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        
+    <div class="container">
+    <h2>Web WorldWind</h2>
+</div>
+<hr>
+<div class="container">
+    <div class="row row-centered">
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/">Home</a>
+        </div>            
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/get-started/">Get Started</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/features/">Features</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/examples/">Examples</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/tutorials/">Tutorials</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/docs/">Docs</a>
+        </div>
+    </div>
+</div>
+<hr>
+    <div class="container">
+        
+
+<h2 id="get-started">Get Started</h2>
+
+<p>It’s very easy to get started using Web WorldWind. There’s nothing to download. You simply include a short script in an HTML page, as in this example:</p>
+
+<hr />
+
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;!-- This is a very simple example of using Web WorldWind. --&gt;
+&lt;html&gt;
+&lt;head lang=&quot;en&quot;&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;WorldWind Example&lt;/title&gt;
+    &lt;!-- Include the Web WorldWind library. --&gt;
+    &lt;script src=&quot;http://worldwindserver.net/webworldwind/worldwindlib.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div style=&quot;position: absolute; top: 50px; left: 50px;&quot;&gt;
+    &lt;!-- Create a canvas for Web WorldWind. --&gt;
+    &lt;canvas id=&quot;canvasOne&quot; width=&quot;1024&quot; height=&quot;768&quot;&gt;
+        Your browser does not support HTML5 Canvas.
+    &lt;/canvas&gt;
+&lt;/div&gt;
+&lt;script&gt;
+    // Register an event listener to be called when the page is loaded.
+    window.addEventListener(&quot;load&quot;, eventWindowLoaded, false);
+
+    // Define the event listener to initialize Web WorldWind.
+    function eventWindowLoaded() {
+        // Create a WorldWindow for the canvas.
+        var wwd = new WorldWind.WorldWindow(&quot;canvasOne&quot;);
+
+        // Add some image layers to the WorldWindow's globe.
+        wwd.addLayer(new WorldWind.BMNGOneImageLayer());
+        wwd.addLayer(new WorldWind.BingAerialWithLabelsLayer());
+
+        // Add a compass, a coordinates display and some view controls to the WorldWindow.
+        wwd.addLayer(new WorldWind.CompassLayer());
+        wwd.addLayer(new WorldWind.CoordinatesDisplayLayer(wwd));
+        wwd.addLayer(new WorldWind.ViewControlsLayer(wwd));
+    }
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<hr />
+
+<p>This example first includes the Web WorldWind library, worldwindlib.js, then creates an HTML5 canvas, then defines a script that creates the WorldWindow and populates it with two image layers and three control layers. Click [this link](<a href="http://worldwindserver.net/webworldwind/examples/SimplestExample.html">http://worldwindserver.net/webworldwind/examples/SimplestExample.html</a> to see the web page it creates in a new window. The page contains an interactive 3D virtual globe. Try zooming in with your mouse wheel or on a mobile device with a pinch gesture. Drag the mouse or your finger to pan around the globe. Drag the right mouse button or your two fingers upward to tilt the globe.</p>
+
+<p>Web WorldWind provides much more functionality than is available in this simple example. The <a href="/web/examples">Examples page</a> illustrates much of that functionality in simple examples. The <a href="/web/docs">Docs page</a> describes Web WorldWind’s functionality in detail. The <a href="/web/tutorials">Tutorials page</a> explains how to deploy Web WorldWind at  your own web site. If you need help, see the resources listed on the <a href="https://nasaworldwind.github.io/">Home page</a>, especially the <a href="https://forum.worldwindcentral.com/forum/web-world-wind/web-world-wind-help">Web WorldWind forum</a>.</p>
+
+    </div>
+
+       
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </body>
+</html>

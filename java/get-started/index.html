@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="NASA WorldWind Software Development Kits (SDKs) for geo-spatial 3D virtual
+        globe visualization via OpenGL/WebGL on Android, Java and JavaScript/HTML5 platforms.">
+        <link rel="icon" href="/img/favicon.ico" type="image/x-icon"/>
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/css/theme.css">
+        <title>
+            WorldWind Java Get Started
+        </title>
+    </head>
+    <body>
+             
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="/"><img id="logo-size" src="/img/nasa-logo.svg" alt="Meatball"/></a>
+                    <a class="navbar-brand" href="/">NASA WorldWind</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/web">Web</a></li>
+                        <li><a href="/android">Android</a></li>
+                        <li><a href="/java">Java</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        
+    <div class="container">
+    <h2>WorldWind Java</h2>
+</div>
+<hr>
+<div class="container">
+    <div class="row row-centered">
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/java/">Home</a>
+        </div>            
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/java/get-started/">Get Started</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/java/features/">Features</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/java/demos/">Demos</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/java/examples/">Examples</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/java/tutorials/">Tutorials</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/java/releases/">Releases</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/java/docs/">Docs</a>
+        </div>
+    </div>
+</div>
+<hr>
+    <div class="container">
+        
+
+<h2 id="get-started">Get Started</h2>
+
+<p>WorldWind is an SDK (software development kit) that software engineers can use to build their own applications. To run a WorldWind demo application, visit the <a href="/java/demos/">Demos</a> page. Follow these instructions to download, run, and deploy an application using WorldWind.</p>
+
+<hr />
+
+<h2 id="run-an-application-using-worldwind">Run an Application Using WorldWind</h2>
+
+<ol>
+<li><p>Download the latest release from the WorldWind <a href="https://github.com/NASAWorldWind/WorldWindJava/releases">GitHub Releases</a>.</p></li>
+
+<li><p>Extract the WorldWind SDK to a folder anywhere on your hard drive. The following steps refer to the extracted folder as WorldWind.</p></li>
+
+<li><p>Run a WorldWind Demo by opening the WorldWind/README.txt and following the instructions under &ldquo;Running a Basic Demo Application&rdquo;.</p></li>
+
+<li><p>Create an app by reviewing the programming examples in WorldWind/src/gov/nasa/worldwindx/examples. Start with SimplestPossibleExample and ApplicationTemplate, then refer to the <a href="/java/examples/">Examples</a> page for more advanced topics. Here are examples of running your app from the command-line, assuming your app&rsquo;s JAR file is MyApp.jar, and your main class is worldwinddemo.MyBasicDemo.</p>
+
+<p>On Mac OS X and Linux</p>
+
+<pre><code>java -Xmx1024m -cp MyApp.jar:worldwind.jar:worldwindx.jar:jogl-all.jar:gluegen-rt.jar:gdal.jar worldwinddemo.MyBasicDemo
+</code></pre>
+
+<p>On Windows</p>
+
+<pre><code>java -Xmx1024m -Dsun.java2d.noddraw=true -cp MyApp.jar;worldwind.jar;worldwindx.jar;jogl-all.jar;gluegen-rt.jar;gdal.jar worldwinddemo.MyBasicDemo
+</code></pre>
+
+<p>Note: All *.dll, *.jnilib, and *.so files in the WorldWind folder must be in the same folder as MyApp.jar.</p></li>
+</ol>
+
+<hr />
+
+<h2 id="deploy-an-application-using-java-web-start">Deploy an Application Using Java Web Start</h2>
+
+<ol>
+<li><p>Create a Java Web Start Application JNLP File
+Modify the template JNLP file WorldWind/webstart/JavaWebStartTemplate.jnlp to fit your app.</p></li>
+
+<li><p>Add WorldWind Libraries to Your Application JNLP
+Insert the following XML extension elements in the resources block of your app&rsquo;s JNLP file, depending on your app&rsquo;s needs:</p>
+
+<p>WorldWind Core Library (required)</p>
+
+<pre><code>xml
+&lt;extension name=&quot;worldwind&quot; href=&quot;http://worldwind.arc.nasa.gov/java/v2.1.0/webstart/worldwind.jnlp&quot;/&gt;
+</code></pre>
+
+<p>WorldWind Extensions Library (required if your app uses the gov.nasa.worldwindx package)</p>
+
+<pre><code>xml
+&lt;extension name=&quot;worldwindx&quot; href=&quot;http://worldwind.arc.nasa.gov/java/v2.1.0/webstart/worldwindx.jnlp&quot;/&gt;
+</code></pre>
+
+<p>GDAL Library (optional, include if your app uses WorldWind&rsquo;s data import feature)</p>
+
+<pre><code>xml
+&lt;extension name=&quot;gdal&quot; href=&quot;http://worldwind.arc.nasa.gov/java/v2.1.0/webstart/gdal.jnlp&quot;/&gt;
+</code></pre></li>
+
+<li><p>Prepare Your Application&rsquo;s JAR Files
+JAR files used by a Java Web Start application must be signed by a recognized authority, and must specify the Permissions manifest attribute. WorldWind&rsquo;s JAR files have already been signed and contain the necessary manifest attributes. See Oracle&rsquo;s documentation on Signing JAR Files and JAR File Manfiest Attributes for Security.</p></li>
+
+<li><p>Deploy Your Application
+Determine a URL to host your app at, such as <a href="http://myworldwinddemo.org/">http://myworldwinddemo.org/</a>. Set your JNLP file&rsquo;s codebase attribute to this URL, then host your JNLP file and any JAR files referenced by your JNLP at this URL. See Oracle&rsquo;s documentation on Rich Internet Application Deployment for more information.</p></li>
+</ol>
+
+    </div>
+
+       
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </body>
+</html>

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="NASA WorldWind Software Development Kits (SDKs) for geo-spatial 3D virtual
+        globe visualization via OpenGL/WebGL on Android, Java and JavaScript/HTML5 platforms.">
+        <link rel="icon" href="/img/favicon.ico" type="image/x-icon"/>
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/css/theme.css">
+        <title>
+            Navigation and Viewing
+        </title>
+    </head>
+    <body>
+             
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="/"><img id="logo-size" src="/img/nasa-logo.svg" alt="Meatball"/></a>
+                    <a class="navbar-brand" href="/">NASA WorldWind</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/web">Web</a></li>
+                        <li><a href="/android">Android</a></li>
+                        <li><a href="/java">Java</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        
+    <div class="container">
+    <h2>Web WorldWind</h2>
+</div>
+<hr>
+<div class="container">
+    <div class="row row-centered">
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/">Home</a>
+        </div>            
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/get-started/">Get Started</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/features/">Features</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/examples/">Examples</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/tutorials/">Tutorials</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/docs/">Docs</a>
+        </div>
+    </div>
+</div>
+<hr>
+    <div class="container">
+        
+
+<h2 id="navigation-and-viewing">Navigation and Viewing</h2>
+
+<p>As the user interacts with the globe, panning, zooming and tilting, it’s the WorldWindow’s Navigator that translates the user’s movements into operations on the globe. Each WorldWindow has one navigator. That navigator is responsible for the view onto the globe. A navigator is created automatically when you create a WorldWindow.</p>
+
+<p>Topics on this page:</p>
+
+<ul>
+<li><a href="#controlling-view">Controlling the View from the WorldWindow</a></li>
+<li><a href="#controlling-navigator">Controlling the Navigator</a></li>
+<li><a href="#goto">GoTo Animator</a></li>
+<li><a href="#geocoders">Geocoders</a></li>
+</ul>
+
+<h2 id="a-name-controlling-view-a-controlling-the-view-from-the-worldwindow"><a name="controlling-view"></a>Controlling the View from the WorldWindow</h2>
+
+<p>If all you want to do is move the view to a geographic location or position (a location with altitude), you can use the goTo function of WorldWindow to do that. The GoToLocation example does this. You can directly modify the properties of the WorldWindow’s GoToAnimator to change the go-to travel time or update frequency, or to cancel a previously requested go-to request.</p>
+
+<h2 id="a-name-controlling-navigator-a-controlling-the-navigator"><a name="controlling-navigator"></a>Controlling the Navigator</h2>
+
+<p>Unless an app wants to change the user’s view programmatically, it never needs to interact with the navigator. But it’s certainly possible to direct the navigator from the app itself.</p>
+
+<p>The navigator has two primary properties allowing control:</p>
+
+<ul>
+<li>lookAtLocation — Indicates the latitude and longitude of where the user’s view is pointed.</li>
+<li>range — Indicates the eye distance from the globe’s ellipsoid.</li>
+</ul>
+
+<p>By specifying these properties the app can move the user to any point around the globe, as in this example:</p>
+
+<pre><code class="language-javascript">// Get a reference to the WorldWindow.
+var wwd = ...
+
+// Adjust the Navigator to place Alaska in the center of the
+// WorldWindow.
+wwd.navigator.lookAtLocation.latitude = 65;
+wwd.navigator.lookAtLocation.longitude = -150;
+wwd.navigator.range = 2e6; // 2 million meters above the ellipsoid
+
+// Redraw the WorldWindow.
+wwd.redraw();
+</code></pre>
+
+<p>This code goes directly to the new view. Ideally the view would change incrementally and smoothly. For that use a GoToAnimator, described below.</p>
+
+<p>The navigator also has the following properties that the app can set:</p>
+
+<ul>
+<li>heading — The navigator’s heading, in degrees clockwise from north.</li>
+<li>tilt — The navigator’s tilt, in degrees. A value of 0 points the user straight down on the globe. A value of 90 views the horizon.</li>
+<li>roll — The navigator’s angle around an imaginary line from the eye position to the look-at location. This property normally stays set to 0.</li>
+</ul>
+
+<h2 id="a-name-goto-a-goto-animator"><a name="goto"></a>GoTo Animator</h2>
+
+<p>To change the navigator smoothly, use the GoToAnimator class. You can see example usage in LayerManager.js. To  use this class you pass its goTo function either a Location or a Position. Use a Location if you want the start and end positions to have the same altitude. Use a Position if you want the end position to have a different altitude than the start position. You can change the time it takes to perform the animation via the <em>travelTime</em> property.</p>
+
+<h2 id="a-name-geocoders-a-geocoders"><a name="geocoders"></a>Geocoders</h2>
+
+<p>Geocoders convert query strings identifying places to geographic locations and other useful information. Web WorldWind provides the NominatimGeocoder that uses Open Street Map’s Nominatim geocoder at MapQuest. An example of its usage is in LayerManager.js.</p>
+
+<p>The NominatimGeocoder has one function, lookup. The arguments to this function are a query string and a callback function. The query string is sent to the geocoder service. The callback function is called when the service replies. The arguments to the callback function are, in order, a reference to geocoder and an array of query results. The results are parsed JSON and contain a wealth of information about the places found that match the query string. More than one place may be identified; each is represented by an element in the return array. Two important properties of each result are its lat and lon properties, which identify the latitude and longitude of the place. These coordinates can be passed to a GoToAnimator to move the navigator smoothly to that geographic position. An example of doing this is in LayerManager.js. See the NominatimGeocoder API doc to determine the details of the returned results and the accepted query string parameters.</p>
+
+    </div>
+
+       
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </body>
+</html>

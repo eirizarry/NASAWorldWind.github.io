@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="NASA WorldWind Software Development Kits (SDKs) for geo-spatial 3D virtual
+        globe visualization via OpenGL/WebGL on Android, Java and JavaScript/HTML5 platforms.">
+        <link rel="icon" href="/img/favicon.ico" type="image/x-icon"/>
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/css/theme.css">
+        <title>
+            Placemarks
+        </title>
+    </head>
+    <body>
+             
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="/"><img id="logo-size" src="/img/nasa-logo.svg" alt="Meatball"/></a>
+                    <a class="navbar-brand" href="/">NASA WorldWind</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/web">Web</a></li>
+                        <li><a href="/android">Android</a></li>
+                        <li><a href="/java">Java</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        
+    <div class="container">
+    <h2>WorldWind Android</h2>
+</div>
+<hr>
+<div class="container">
+    <div class="row row-centered">
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/android/">Home</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/android/get-started/">Get Started</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/android/tutorials/">Tutorials</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/android/examples/">Examples</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/android/docs/">Docs</a>
+        </div>
+    </div>
+</div>
+<hr>
+    <div class="container">
+        
+
+<h2 id="placemarks">Placemarks</h2>
+
+<p><img src="/img/ww-android-placemarks.png" class="img-responsive" hspace="10" vspace="10" align="left">This example renders four different placemarks with one above ground.</p>
+
+<h3 id="placemarksfragment-java">PlacemarksFragment.java</h3>
+
+<p>The PlacemarksFragment class extends the BasicGlobeFragment and overrides the createWorldWindow method. Here we create a add a RenderableLayer with four Placemarks to the globe.</p>
+
+<p><img src="/img/ww-android-placemarks-classes.png" class="img-responsive center-block"></p>
+
+<pre><code class="language-java">public class PlacemarksFragment extends BasicGlobeFragment {
+
+    /**
+     * Creates a new WorldWindow with a RenderableLayer populated with four Placemarks.
+     */
+    @Override
+    public WorldWindow createWorldWindow() {
+        // Let the super class (BasicGlobeFragment) do the creation
+        WorldWindow wwd = super.createWorldWindow();
+
+        // Create a RenderableLayer for placemarks and add it to the WorldWindow
+        RenderableLayer placemarksLayer = new RenderableLayer(&quot;Placemarks&quot;);
+        wwd.getLayers().addLayer(placemarksLayer);
+
+        //////////////////////////////////////
+        // Second, create some placemarks...
+        /////////////////////////////////////
+
+        // Create a simple placemark at downtown Ventura, CA. This placemark is a 20x20 cyan square centered on the
+        // geographic position. This placemark demonstrates the creation with a convenient factory method.
+        Placemark ventura = Placemark.createWithColorAndSize(Position.fromDegrees(34.281, -119.293, 0), new Color(0, 1, 1, 1), 20);
+
+        // Create an image-based placemark of an aircraft above the ground with a leader-line to the surface.
+        // This placemark demonstrates creation via a constructor and a convenient PlacemarkAttributes factory method.
+        // The image is scaled to 1.5 times its original size.
+        Placemark airplane = new Placemark(
+            Position.fromDegrees(34.260, -119.2, 5000),
+            PlacemarkAttributes.createWithImageAndLeader(ImageSource.fromResource(R.drawable.aircraft_fixwing)).setImageScale(1.5));
+
+        // Create an image-based placemark with a label at Oxnard Airport, CA. This placemark demonstrates creation
+        // with a constructor and a convenient PlacemarkAttributes factory method. The image is scaled to 2x
+        // its original size, with the bottom center of the image anchored at the geographic position.
+        Placemark airport = new Placemark(
+            Position.fromDegrees(34.200, -119.208, 0),
+            PlacemarkAttributes.createWithImage(ImageSource.fromResource(R.drawable.airport_terminal)).setImageOffset(Offset.bottomCenter()).setImageScale(2),
+            &quot;Oxnard Airport&quot;);
+
+        // Create an image-based placemark from a bitmap. This placemark demonstrates creation with a
+        // constructor and a convenient PlacemarkAttributes factory method. First, a 64x64 bitmap is loaded
+        // and then it is passed into the placemark attributes. The the bottom center of the image anchored
+        // at the geographic position.
+        Bitmap bitmap = BitmapFactory.decodeResource(getWorldWindow().getResources(), R.drawable.ehipcc);
+        Placemark wildfire = new Placemark(
+            Position.fromDegrees(34.300, -119.25, 0),
+            PlacemarkAttributes.createWithImage(ImageSource.fromBitmap(bitmap)).setImageOffset(Offset.bottomCenter()));
+
+        /////////////////////////////////////////////////////
+        // Third, add the placemarks to the renderable layer
+        /////////////////////////////////////////////////////
+
+        placemarksLayer.addRenderable(ventura);
+        placemarksLayer.addRenderable(airport);
+        placemarksLayer.addRenderable(airplane);
+        placemarksLayer.addRenderable(wildfire);
+
+
+        // And finally, for this demo, position the viewer to look at the airport placemark
+        // from a tilted perspective when this Android activity is created.
+        Position pos = airport.getPosition();
+        LookAt lookAt = new LookAt().set(pos.latitude, pos.longitude, pos.altitude, WorldWind.ABSOLUTE,
+            1e5 /*range*/, 0 /*heading*/, 80 /*tilt*/, 0 /*roll*/);
+        wwd.getNavigator().setAsLookAt(wwd.getGlobe(), lookAt);
+
+        return wwd;
+    }
+}
+</code></pre>
+
+    </div>
+
+       
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </body>
+</html>

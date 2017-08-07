@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="NASA WorldWind Software Development Kits (SDKs) for geo-spatial 3D virtual
+        globe visualization via OpenGL/WebGL on Android, Java and JavaScript/HTML5 platforms.">
+        <link rel="icon" href="/img/favicon.ico" type="image/x-icon"/>
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/css/theme.css">
+        <title>
+            Importing Data
+        </title>
+    </head>
+    <body>
+             
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="/"><img id="logo-size" src="/img/nasa-logo.svg" alt="Meatball"/></a>
+                    <a class="navbar-brand" href="/">NASA WorldWind</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/web">Web</a></li>
+                        <li><a href="/android">Android</a></li>
+                        <li><a href="/java">Java</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        
+    <div class="container">
+    <h2>WorldWind Java</h2>
+</div>
+<hr>
+<div class="container">
+    <div class="row row-centered">
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/java/">Home</a>
+        </div>            
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/java/get-started/">Get Started</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/java/features/">Features</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/java/demos/">Demos</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/java/examples/">Examples</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/java/tutorials/">Tutorials</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/java/releases/">Releases</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/java/docs/">Docs</a>
+        </div>
+    </div>
+</div>
+<hr>
+    <div class="container">
+        
+
+<h2 id="importing-data">Importing Data</h2>
+
+<p>Follow these instructions to import data to the WorldWind client.</p>
+
+<p><strong>1) Download the WorldWind Java SDK</strong></p>
+
+<p>Follow the instructions on the Get Started page to download and extract the latest WorldWind Java SDK.</p>
+
+<p><strong>2) Run the Install Imagery And Elevations Application</strong></p>
+
+<p>Here is an examples of running the Install Imagery And Elevations application from the command-line:</p>
+
+<p>On Mac OS X and Linux:</p>
+
+<pre><code>java -Xmx1024m -cp MyApp.jar:worldwind.jar:worldwindx.jar:jogl-all.jar:gluegen-rt.jar:gdal.jar gov.nasa.worldwindx.examples.dataimport.InstallImageryAndElevationsDemo
+</code></pre>
+
+<p>On Windows:</p>
+
+<pre><code>java -Xmx1024m -Dsun.java2d.noddraw=true -cp MyApp.jar;worldwind.jar;worldwindx.jar;jogl-all.jar;gluegen-rt.jar;gdal.jar gov.nasa.worldwindx.examples.dataimport.InstallImageryAndElevationsDemo
+</code></pre>
+
+<p>Note: All *.dll, *.jnilib, and *.so files in the WorldWind folder must be in the same folder as MyApp.jar.</p>
+
+<p><strong>3) Import Data</strong></p>
+
+<p>Once the Install Imagery And Elevations application is running, click on the Show Installed Data&hellip; button to open the Installed Data window.</p>
+
+<p>In the Installed Data window, locate the Create a full pyramid check box and select it if you are intending to use the imported data on the server, otherwise you can leave it unchecked. Data can be installed as a full pyramid of tiles or as a partial pyramid. Installing a full pyramid takes longer and consumes more space on the user&rsquo;s hard drive, but has the best runtime performance, which is important for the server. Installing a partial pyramid takes less time and consumes less space on the user&rsquo;s hard drive, but requires that the original data remain in the location from which it was installed, and causes WorldWind to create portions of the full pyramid as needed during runtime, resulting in slower runtime performance.</p>
+
+<p>In the Installed Data window, click the Install&hellip; button.</p>
+
+<p>Locate and select the imagery or elevation file you would like to import and click the Install button.</p>
+
+<p>The progress window will appear and show progress of the data import.</p>
+
+<p>Once the import task completes, the newly created layer will be added to the WorldWind layer tree and a new button with the name of imported file will appear in the list of installed data. You may click on the button and WorldWind will zoom in to the newly imported data.</p>
+
+    </div>
+
+       
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </body>
+</html>

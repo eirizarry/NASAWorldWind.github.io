@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="NASA WorldWind Software Development Kits (SDKs) for geo-spatial 3D virtual
+        globe visualization via OpenGL/WebGL on Android, Java and JavaScript/HTML5 platforms.">
+        <link rel="icon" href="/img/favicon.ico" type="image/x-icon"/>
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/css/theme.css">
+        <title>
+            Picking
+        </title>
+    </head>
+    <body>
+             
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="/"><img id="logo-size" src="/img/nasa-logo.svg" alt="Meatball"/></a>
+                    <a class="navbar-brand" href="/">NASA WorldWind</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/web">Web</a></li>
+                        <li><a href="/android">Android</a></li>
+                        <li><a href="/java">Java</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        
+    <div class="container">
+    <h2>Web WorldWind</h2>
+</div>
+<hr>
+<div class="container">
+    <div class="row row-centered">
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/">Home</a>
+        </div>            
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/get-started/">Get Started</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/features/">Features</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/examples/">Examples</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/tutorials/">Tutorials</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/docs/">Docs</a>
+        </div>
+    </div>
+</div>
+<hr>
+    <div class="container">
+        
+
+<h2 id="picking">Picking</h2>
+
+<p>Picking is performed by the WorldWindow. There are four flavors of picking:</p>
+
+<ul>
+<li>Normal picking returns the visible object or terrain at a specified pick point. See PlacemarksAndPicking.js for an example.</li>
+<li>Deep picking returns all objects at a specified pick point. See DeepPicking.js for an example.</li>
+<li>Region picking returns all visible objects within a specified pick region. See PickAllShapesInRegion.js for an example.</li>
+<li>Terrain picking returns the geographic coordinates of the terrain at a specified pick point. See CoordinatesDisplayLayer.js for an example.</li>
+</ul>
+
+<p>The sections below provide the details of each flavor.</p>
+
+<p>Picking is initiated by the app using the API on the WorldWindow object. It’s typically performed in response to a mouse click or tap gesture, but the app may initiate picking at any time it chooses.</p>
+
+<p>Picking is fast, much faster than actually drawing the scene. But apps should invoke picking judiciously because it does require both CPU and GPU resources.</p>
+
+<h2 id="pick-return">Pick Return</h2>
+
+<p>All flavors of picking return a PickedObjectList containing an array of PickedObjects. Each PickedObject identifies the individual item that was picked. Included in that object is a reference to the picked shape and a flag indicating whether the picked object is the top-most object in the returned collection of picked objects. In the case of normal picking there will be at most one picked shape identified, and its isOnTop property will be true. In the case of deep picking there may be several picked objects, but only one will be marked as the top-most. This top-most object may be the terrain, as described below.</p>
+
+<p>For region picking all objects that fall within the pick region are returned regardless of whether they are actually visible on the screen (not occluded by other shapes or terrain). But the truly visible ones are marked as top-most.</p>
+
+<p>In all flavors of picking but region picking, the picked object list may contain a picked object identifying terrain. Its isTerrain property is true. This object identifies the geographic position of the pick point (the position property). It’s returned if the pick point is within the terrain and not in space. If the terrain at that position occludes the other items in the picked object list, the terrain object is marked as top-most.</p>
+
+<p>Also included in the picked object is the parent layer of the picked shape. See the API doc for PickedObject for further details.</p>
+
+<h2 id="picking-interface">Picking Interface</h2>
+
+<p>The API for picking is all on the WorldWindow object. The methods are:</p>
+
+<p>pick for normal and deep picking
+pickTerrain for terrain picking
+pickShapesInRegion for region picking
+For deep picking you set the WorldWindow’s deepPicking property prior to calling the pick method.</p>
+
+<h2 id="pick-point-and-pick-region">Pick Point and Pick Region</h2>
+
+<p>The pick point and pick region are specified in screen coordinates, but coordinates relative to the WorldWindow’s canvas. Those coordinates can be easily computed using the canvasCoodinates method of the WorldWindow object, as follows in this call to pick:</p>
+
+<pre><code class="language-javascript">var pickList = wwd.pick(wwd.canvasCoordinates(x, y));
+</code></pre>
+
+<p>The x and y in this call are the clientX and clientY properties of the event passed to the event handler.</p>
+
+<p>For region picking, the pick region is relative to the upper-left corner of the window. Here is code from the PickAllShapesInRegion example that composes the pick region:</p>
+
+<pre><code class="language-javascript">var rectRadius = 50,
+    pickPoint = wwd.canvasCoordinates(x, y),
+    pickRectangle = new WorldWind.Rectangle(
+        pickPoint[0] - rectRadius,
+        pickPoint[1] + rectRadius,
+        2 * rectRadius, 2 * rectRadius);
+</code></pre>
+
+<p>Notice that the origin of the rectangle (the first two arguments to the Rectangle constructor above) is its upper-left corner.</p>
+
+    </div>
+
+       
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </body>
+</html>

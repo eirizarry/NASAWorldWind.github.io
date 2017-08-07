@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="NASA WorldWind Software Development Kits (SDKs) for geo-spatial 3D virtual
+        globe visualization via OpenGL/WebGL on Android, Java and JavaScript/HTML5 platforms.">
+        <link rel="icon" href="/img/favicon.ico" type="image/x-icon"/>
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/css/theme.css">
+        <title>
+            Concepts
+        </title>
+    </head>
+    <body>
+             
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="/"><img id="logo-size" src="/img/nasa-logo.svg" alt="Meatball"/></a>
+                    <a class="navbar-brand" href="/">NASA WorldWind</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/web">Web</a></li>
+                        <li><a href="/android">Android</a></li>
+                        <li><a href="/java">Java</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        
+    <div class="container">
+    <h2>Web WorldWind</h2>
+</div>
+<hr>
+<div class="container">
+    <div class="row row-centered">
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/">Home</a>
+        </div>            
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/get-started/">Get Started</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/features/">Features</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/examples/">Examples</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/tutorials/">Tutorials</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/web/docs/">Docs</a>
+        </div>
+    </div>
+</div>
+<hr>
+    <div class="container">
+        
+
+<h2 id="concepts">Concepts</h2>
+
+<p>Web WorldWind is a virtual globe component that you embed in web pages. It provides an interactive, 3D geographic context for information. As a component, it comprises one aspect of a web application or web page. Other components provide textual or graphic information or provide a user interface. In the following  figure, Web WorldWind is just the portion outlined in red. The rest of the components on the web page — the menus, the buttons, the text — are HTML developed by the web page creator.</p>
+
+<p><img src="/img/web/layout.jpg" alt="Example Web WorldWind Page" /></p>
+
+<p>The Web WorldWind component is called a WorldWindow. The web page may contain more than one WorldWindow. Each operates independently of the others. The WorldWindow is the primary object the application interacts with.</p>
+
+<h2 id="the-worldwindow">The WorldWindow</h2>
+
+<p>The following figure illustrates Web WorldWind’s overall architecture. Objects in red are objects the app typically interacts with, in addition to the WorldWindow. Items in cyan represent objects that work behind the scenes to retrieve data from the internet and create what the user sees.</p>
+
+<p><img src="/img/web/architecture1.jpg" alt="Web WorldWind Architecture" /></p>
+
+<p>The WorldWindow object encapsulates the Web WorldWind functionality around an HTML canvas. The canvas is created by the app, typically within a <div> element in an HTML page. It’s ID is passed to WorldWind during construction of a WorldWindow object. An app (web page) may contain more than one WorldWindow object, each for a different canvas.</p>
+
+<p>In addition to acting as a container for the Globe and other objects, the WorldWindow provides picking and scene control. See the WorldWindow chapter of this developer’s guide for more information about it. Also see the WorldWindow API documentation for its interface details.</p>
+
+<h2 id="layers">Layers</h2>
+
+<p>Aside from the WorldWindow, the most fundamental objects in Web WorldWind are layers. Layers contain all the information displayed in the WorldWindow. All imagery, shapes and decorations such as the compass are defined in layers.</p>
+
+<p>Each WorldWindow contains one Layer List, which holds all the layers displayed in that WorldWindow. When the WorldWindow draws the scene, it traverses its layer list in order and draws the imagery and other content listed there.</p>
+
+<p>Typically a layer list includes imagery layers followed by shape layers followed by decoration layers. The WorldWindow’s layer list is empty by default. The first thing a Web WorldWind application must do is add layers to the layer list. You can see this in all the Web WorldWind examples. Here’s an example of adding initial imagery layers along with a compass, a coordinates display and view controls:</p>
+
+<pre><code class="language-javascript">// Create the WorldWindow.
+var wwd = new WorldWind.WorldWindow(&quot;canvasOne&quot;);
+
+// Create and add imagery layers.
+wwd.addLayer(new WorldWind.BMNGLayer());
+wwd.addLayer(new WorldWind.BingAerialWithLabelsLayer(null));
+
+// Create and add decoration layers.
+wwd.addLayer(new WorldWind.CompassLayer());
+wwd.addLayer(new WorldWind.CoordinatesDisplayLayer(wwd));
+wwd.addLayer(new WorldWind.ViewControlsLayer(wwd));
+</code></pre>
+
+<p>See the <a href="/web/tutorials/layers/">Layers</a> section of the tutorials for lots more information about layers.</p>
+
+<h2 id="shapes">Shapes</h2>
+
+<p>Shapes represent information that you want to display on or relative to the globe. They can be simple placemarks, complex volumes or shapes draped on the terrain. All shapes are contained in layers and the layers contained in a WorldWindow’s layer list. Web WorldWind provides many different kinds of shapes. See the <a href="/web/tutorials/shapes/">Shapes</a> tutorial for a listing and complete description of Web WorldWind’s shapes.</p>
+
+<h2 id="globe">Globe</h2>
+
+<p>The Globe is responsible for representing the WGS84 ellipsoid and its terrain. It also handles implementation of the various 2D projections that can be utilized instead of the 3D globe. Aside from selecting these projections, the application does not typically interact with the globe. The exception is when the application desires to know terrain elevations, such as when performing line-of-sight calculations, or when it needs to convert between geographic and Cartesian coordinates. See the API documentation for Globe and Globe2D to learn more about the Globe object.</p>
+
+<p>Each WorldWindow has one Globe, created automatically when the WorldWindow is created. The application may replace this globe with another. Most Web WorldWind examples replace the globe with a 2D, flat globe when the user selects a 2D projection.</p>
+
+<h2 id="navigator">Navigator</h2>
+
+<p>The Navigator is responsible for converting user actions to manipulations of the globe. It monitors mouse events and user gestures and translates them to pan, zoom or tilt operations on the globe. The Navigator can also be driven by the application to move the view to a particular location or to set its tilt and heading.</p>
+
+<p>Each WorldWindow has its own Navigator, which is created automatically when the WorldWindow is created. The application may subsequently replace this Navigator, perhaps with one the app developer created to operate differently or in response to different gestures.</p>
+
+<h2 id="other-objects">Other Objects</h2>
+
+<p>The above objects — WorldWindow, Layers, Shapes, Globe, Navigator — are the objects that applications typically interact with. Web WorldWind contains many other objects, most of which operate behind the scenes without any direction needed from the application. This includes those objects that automatically retrieve data such as imagery and elevations from the internet. Applications may interact with these objects to achieve non-default behavior, but doing so is not necessary.</p>
+
+<h2 id="extensibility">Extensibility</h2>
+
+<p>Web WorldWind is designed to be readily extensible. Developers should feel free to customize Web WorldWind objects to achieve effects that Web WorldWind does not already provide. Applications often extend and customize shapes, for example, or create completely new ones.</p>
+
+    </div>
+
+       
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </body>
+</html>

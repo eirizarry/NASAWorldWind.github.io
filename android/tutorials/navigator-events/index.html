@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="NASA WorldWind Software Development Kits (SDKs) for geo-spatial 3D virtual
+        globe visualization via OpenGL/WebGL on Android, Java and JavaScript/HTML5 platforms.">
+        <link rel="icon" href="/img/favicon.ico" type="image/x-icon"/>
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/css/theme.css">
+        <title>
+            Navigator Events
+        </title>
+    </head>
+    <body>
+             
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="/"><img id="logo-size" src="/img/nasa-logo.svg" alt="Meatball"/></a>
+                    <a class="navbar-brand" href="/">NASA WorldWind</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/web">Web</a></li>
+                        <li><a href="/android">Android</a></li>
+                        <li><a href="/java">Java</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        
+    <div class="container">
+    <h2>WorldWind Android</h2>
+</div>
+<hr>
+<div class="container">
+    <div class="row row-centered">
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/android/">Home</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/android/get-started/">Get Started</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/android/tutorials/">Tutorials</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/android/examples/">Examples</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/android/docs/">Docs</a>
+        </div>
+    </div>
+</div>
+<hr>
+    <div class="container">
+        
+
+<h2 id="navigator-events">Navigator Events</h2>
+
+<p><img src="/img/ww-android-navigator-events.png" class="img-responsive" hspace="10" vspace="10" align="left">The crosshairs and overlays react to the user input.</p>
+
+<h3 id="navigatoreventfragment-java">NavigatorEventFragment.java</h3>
+
+<p>The NavigatorEventFragment class extends the BasicGlobeFragment and overrides the onCreateView method. Here we create some screen overlays and implement a NavigatorListener to respond to NavigatorEvents.</p>
+
+<p><img src="/img/ww-android-navigator-events-classes.png" class="img-responsive center-block"></p>
+
+<pre><code class="language-java">public class NavigatorEventFragment extends BasicGlobeFragment {
+
+    // UI elements
+    protected TextView latView;
+
+    protected TextView lonView;
+
+    protected TextView altView;
+
+    protected ImageView crosshairs;
+
+    protected ViewGroup overlay;
+
+    // Use pre-allocated navigator state objects to avoid per-event memory allocations
+    private LookAt lookAt = new LookAt();
+
+    private Camera camera = new Camera();
+
+    // Track the navigation event time so the overlay refresh rate can be throttled
+    private long lastEventTime;
+
+    // Animation object used to fade the overlays
+    private AnimatorSet animatorSet;
+
+    private boolean crosshairsActive;
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // Let the super class (BasicGlobeFragment) create the view and the WorldWindow
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+
+        // Initialize the UI elements that we'll update upon the navigation events
+        this.crosshairs = (ImageView) rootView.findViewById(R.id.globe_crosshairs);
+        this.overlay = (ViewGroup) rootView.findViewById(R.id.globe_status);
+        this.crosshairs.setVisibility(View.VISIBLE);
+        this.overlay.setVisibility(View.VISIBLE);
+        this.latView = (TextView) rootView.findViewById(R.id.lat_value);
+        this.lonView = (TextView) rootView.findViewById(R.id.lon_value);
+        this.altView = (TextView) rootView.findViewById(R.id.alt_value);
+        ObjectAnimator fadeOut = ObjectAnimator.ofFloat(this.crosshairs, &quot;alpha&quot;, 0f).setDuration(1500);
+        fadeOut.setStartDelay((long) 500);
+        this.animatorSet = new AnimatorSet();
+        this.animatorSet.play(fadeOut);
+
+        // Create a simple Navigator Listener that logs navigator events emitted by the WorldWindow.
+        NavigatorListener listener = new NavigatorListener() {
+            @Override
+            public void onNavigatorEvent(WorldWindow wwd, NavigatorEvent event) {
+                long currentTime = System.currentTimeMillis();
+                long elapsedTime = currentTime - lastEventTime;
+                int eventAction = event.getAction();
+                boolean receivedUserInput = (eventAction == WorldWind.NAVIGATOR_MOVED &amp;&amp; event.getLastInputEvent() != null);
+
+                // Update the status overlay views whenever the navigator stops moving,
+                // and also it is moving but at an (arbitrary) maximum refresh rate of 20 Hz.
+                if (eventAction == WorldWind.NAVIGATOR_STOPPED || elapsedTime &gt; 50) {
+
+                    // Get the current navigator state to apply to the overlays
+                    event.getNavigator().getAsLookAt(wwd.getGlobe(), lookAt);
+                    event.getNavigator().getAsCamera(wwd.getGlobe(), camera);
+
+                    // Update the overlays
+                    updateOverlayContents(lookAt, camera);
+                    updateOverlayColor(eventAction);
+
+                    lastEventTime = currentTime;
+                }
+
+                // Show the crosshairs while the user is gesturing and fade them out after the user stops
+                if (receivedUserInput) {
+                    showCrosshairs();
+                } else {
+                    fadeCrosshairs();
+                }
+            }
+        };
+
+        // Register the Navigator Listener with the activity's WorldWindow.
+        this.getWorldWindow().addNavigatorListener(listener);
+
+        return rootView;
+    }
+
+    /**
+     * Makes the crosshairs visible.
+     */
+    protected void showCrosshairs() {
+        if (this.animatorSet.isStarted()) {
+            this.animatorSet.cancel();
+        }
+        this.crosshairs.setAlpha(1.0f);
+        this.crosshairsActive = true;
+    }
+
+    /**
+     * Fades the crosshairs using animation.
+     */
+    protected void fadeCrosshairs() {
+        if (this.crosshairsActive) {
+            this.crosshairsActive = false;
+            if (!this.animatorSet.isStarted()) {
+                this.animatorSet.start();
+            }
+        }
+    }
+
+    /**
+     * Displays navigator state information in the status overlay views.
+     *
+     * @param lookAt Where the navigator is looking
+     * @param camera Where the camera is positioned
+     */
+    protected void updateOverlayContents(LookAt lookAt, Camera camera) {
+        latView.setText(formatLatitude(lookAt.latitude));
+        lonView.setText(formatLongitude(lookAt.longitude));
+        altView.setText(formatAltitude(camera.altitude));
+    }
+
+    /**
+     * Brightens the colors of the overlay views when when user input occurs.
+     *
+     * @param eventAction The action associated with this navigator event
+     */
+    protected void updateOverlayColor(@WorldWind.NavigatorAction int eventAction) {
+        int color = (eventAction == WorldWind.NAVIGATOR_STOPPED) ? 0xA0FFFF00 /*semi-transparent yellow*/ : Color.YELLOW;
+        latView.setTextColor(color);
+        lonView.setTextColor(color);
+        altView.setTextColor(color);
+    }
+
+    protected String formatLatitude(double latitude) {
+        int sign = (int) Math.signum(latitude);
+        return String.format(&quot;%6.3f°%s&quot;, (latitude * sign), (sign &gt;= 0.0 ? &quot;N&quot; : &quot;S&quot;));
+    }
+
+    protected String formatLongitude(double longitude) {
+        int sign = (int) Math.signum(longitude);
+        return String.format(&quot;%7.3f°%s&quot;, (longitude * sign), (sign &gt;= 0.0 ? &quot;E&quot; : &quot;W&quot;));
+    }
+
+    protected String formatAltitude(double altitude) {
+        return String.format(&quot;Eye: %,.0f %s&quot;,
+            (altitude &lt; 100000 ? altitude : altitude / 1000),
+            (altitude &lt; 100000 ? &quot;m&quot; : &quot;km&quot;));
+    }
+}
+</code></pre>
+
+    </div>
+
+       
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </body>
+</html>

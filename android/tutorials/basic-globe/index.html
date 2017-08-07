@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="NASA WorldWind Software Development Kits (SDKs) for geo-spatial 3D virtual
+        globe visualization via OpenGL/WebGL on Android, Java and JavaScript/HTML5 platforms.">
+        <link rel="icon" href="/img/favicon.ico" type="image/x-icon"/>
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/css/theme.css">
+        <title>
+            Basic Globe
+        </title>
+    </head>
+    <body>
+             
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="/"><img id="logo-size" src="/img/nasa-logo.svg" alt="Meatball"/></a>
+                    <a class="navbar-brand" href="/">NASA WorldWind</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/web">Web</a></li>
+                        <li><a href="/android">Android</a></li>
+                        <li><a href="/java">Java</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        
+    <div class="container">
+    <h2>WorldWind Android</h2>
+</div>
+<hr>
+<div class="container">
+    <div class="row row-centered">
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/android/">Home</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/android/get-started/">Get Started</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/android/tutorials/">Tutorials</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/android/examples/">Examples</a>
+        </div>
+        <div class="col-xs-6 col-centered col-max">
+            <a href="/android/docs/">Docs</a>
+        </div>
+    </div>
+</div>
+<hr>
+    <div class="container">
+        
+
+<h2 id="basic-globe-tutorial">Basic Globe Tutorial</h2>
+
+<p><img src="/img/ww-android-basic-globe.png" class="img-responsive" align="left" vspace="10" hspace="30">The globe uses the default navigation gestures:</p>
+
+<ul>
+<li>one-finger pan moves the camera,</li>
+<li>two-finger pinch-zoom adjusts the range to the look at position,</li>
+<li>two-finger rotate arcs the camera horizontally around the look at position,</li>
+<li>three-finger tilt arcs the camera vertically around the look at position.</li>
+</ul>
+
+<h3 id="get-started">Get Started</h3>
+
+<p>It’s very easy to get started using WorldWind Android. You simply create and configure a WorldWindow View object and add it to a layout. This can be performed in an Activity or a Fragment. The following snippet shows the code that creates the WorldWindow and adds some imagery to the globe.</p>
+
+<pre><code class="language-java">// Create a WorldWindow (a GLSurfaceView)...
+WorldWindow wwd = new WorldWindow(getContext());
+// ... and add some map layers
+wwd.getLayers().addLayer(new BackgroundLayer());
+wwd.getLayers().addLayer(new BlueMarbleLandsatLayer());
+</code></pre>
+
+<h3 id="example">Example</h3>
+
+<p>In this example, we add WorldWindow to a Fragment&rsquo;s layout in its onCreateView() callback.  onCreateView() creates the WorldWind view object and adds the view to the Fragment&rsquo;s FrameLayout.</p>
+
+<h3 id="class-diagram">Class Diagram</h3>
+
+<p>This class diagram shows the primary WorldWind classes used in the Fragment.</p>
+
+<p><img src="/img/ww-android-basic-globe-class-diagram.png" class="img-responsive center-block"></p>
+
+<h3 id="basicglobefragment-java">BasicGlobeFragment.java</h3>
+
+<pre><code class="language-java">public class BasicGlobeFragment extends Fragment {
+
+    private WorldWindow wwd;
+
+    public BasicGlobeFragment() {
+    }
+
+    /**
+     * Creates a new WorldWindow (GLSurfaceView) object.
+     */
+    public WorldWindow createWorldWindow() {
+        // Create the WorldWindow (a GLSurfaceView) which displays the globe.
+        this.wwd = new WorldWindow(getContext());
+        // Setup the WorldWindow's layers.
+        this.wwd.getLayers().addLayer(new BackgroundLayer());
+        this.wwd.getLayers().addLayer(new BlueMarbleLandsatLayer());
+        return this.wwd;
+    }
+
+    /**
+     * Gets the WorldWindow (GLSurfaceView) object.
+     */
+    public WorldWindow getWorldWindow() {
+        return this.wwd;
+    }
+
+    /**
+     * Adds the WorldWindow to this Fragment's layout.
+     */
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_globe, container, false);
+        FrameLayout globeLayout = (FrameLayout) rootView.findViewById(R.id.globe);
+
+        // Add the WorldWindow view object to the layout that was reserved for the globe.
+        globeLayout.addView(this.createWorldWindow());
+
+        return rootView;
+    }
+
+    /**
+     * Resumes the WorldWindow's rendering thread
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.wwd.onResume(); // resumes a paused rendering thread
+    }
+
+    /**
+     * Pauses the WorldWindow's rendering thread
+     */
+    @Override
+    public void onPause() {
+        super.onPause();
+        this.wwd.onPause(); // pauses the rendering thread
+    }
+}
+</code></pre>
+
+<h3 id="layout-fragment-globe-xml">layout/fragment_globe.xml</h3>
+
+<p>A FrameLayout hosts the WorldWindow.</p>
+
+<pre><code class="language-xml">&lt;RelativeLayout
+        xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:layout_gravity=&quot;left|top&quot;&gt;
+
+    &lt;!--WorldWindow Globe panel--&gt;
+    &lt;FrameLayout
+            android:id=&quot;@+id/globe&quot;
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;match_parent&quot;
+            android:layout_alignParentLeft=&quot;true&quot;
+            android:layout_alignParentRight=&quot;true&quot;
+            android:layout_alignParentTop=&quot;true&quot;&gt;&lt;/FrameLayout&gt;
+
+    ...
+&lt;/RelativeLayout&gt;
+</code></pre>
+
+    </div>
+
+       
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </body>
+</html>
