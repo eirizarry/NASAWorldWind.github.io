@@ -16,7 +16,7 @@
     <body>
         <!-- Navigation Bar -->     
         <nav class="navbar navbar-default">
-            <div class="container">
+            <div >
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                         <span class="sr-only">Toggle navigation</span>
@@ -29,11 +29,11 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/">Home</a></li>
                         <li><a href="/about">About</a></li>
-                        <li><a href="/web">Web</a></li>
-                        <li><a href="/android">Android</a></li>
-                        <li><a href="/java">Java</a></li>
                         <li><a href="/contact">Contact</a></li>
+                        <li><a href="">Projects</a></li>
+                        <li><a href=""><img src="/img/question-mark.png" alt="FAQs" height="28px" width="28px"/></a></li>
                     </ul>
                 </div>
             </div>
@@ -41,6 +41,10 @@
 
         {{ block "main" . }}
         {{ end }}
+
+        {{ partial "footer.html" . }}
+
+
        
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
