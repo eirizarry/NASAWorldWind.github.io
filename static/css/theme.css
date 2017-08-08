@@ -1,13 +1,10 @@
 .banner {
-    background-image: url("../img/banner-night.jpg");
+    background-image: url("../img/satellite-image.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
 }
 
-body {
-    padding-bottom: 200px;
-}
 
 /* 
  Styles below from: http://www.minimit.com/articles/solutions-tutorials/bootstrap-3-responsive-centered-columns
@@ -27,4 +24,76 @@ body {
 .col-max {
     /* custom max width */
     max-width:125px;
+}
+
+#navHome {
+    /* Button to WorldWind homepage */
+    padding-top: -8px;
+}
+
+.socialMedia .text-center {
+    background-color: #000;
+}
+
+.gitHub {
+    background-color: #d3d3d3;
+    padding-bottom: 25px;
+    text-align: center;
+}
+
+.footer {
+    background: #000;
+    padding-top: 10px;
+    padding-bottom: 150px;
+}
+.footer a {
+    color: #FFF;
+    padding: 10px;
+    transition: all .5s ease;
+}
+
+.footer a:hover {
+    color: #d3d3d3;
+}
+
+.full {
+    width: 100%;
+}
+.gap {
+    height: 30px;
+    width: 100%;
+    clear: both;
+    display: block;
+}
+
+.footer p {
+    margin: 0;
+}
+
+
+.footer ul li a {
+    padding: 0 0 5px 0;
+    display: block;
+}
+
+.footer a {
+    color: #FFF;
+}
+
+#social-icons {
+    font-size: 30px;
+}
+
+.footerul {
+    list-style-type: none
+}
+
+.footer-title {
+    color: #FFF;
+    text-align: left;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 40px;
+    text-decoration: underline;
+
 }

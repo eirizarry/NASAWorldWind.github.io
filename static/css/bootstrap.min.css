@@ -1361,8 +1361,7 @@ body {
     font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 15px;
     line-height: 1.42857143;
-    color: #2c3e50;
-    background-color: #ffffff
+    background-color: #fff;
 }
 
 input, button, select, textarea {
@@ -1372,7 +1371,7 @@ input, button, select, textarea {
 }
 
 a {
-    color: #18bc9c;
+    color: #000;
     text-decoration: none
 }
 
@@ -1493,11 +1492,11 @@ h2, .h2 {
 }
 
 h3, .h3 {
-    font-size: 26px
+    font-size: 20px;
 }
 
 h4, .h4 {
-    font-size: 19px
+    font-size: px
 }
 
 h5, .h5 {
@@ -1856,8 +1855,6 @@ pre code {
 .container-fluid {
     margin-right: auto;
     margin-left: auto;
-    padding-left: 15px;
-    padding-right: 15px
 }
 
 .row {
@@ -2776,7 +2773,7 @@ th {
 }
 
 .table-hover > tbody > tr:hover {
-    background-color: #ecf0f1
+    background-color:
 }
 
 table col[class*="col-"] {
@@ -4506,13 +4503,11 @@ textarea.input-group-sm > .form-control, textarea.input-group-sm > .input-group-
 .navbar {
     position: relative;
     min-height: 60px;
-    margin-bottom: 21px;
     border: 1px solid transparent
 }
 
 @media (min-width: 768px) {
     .navbar {
-        border-radius: 4px
     }
 }
 
@@ -4620,7 +4615,7 @@ textarea.input-group-sm > .form-control, textarea.input-group-sm > .input-group-
 
 .navbar-brand {
     float: left;
-    padding: 19.5px 15px;
+    padding: 19.5px 1px;
     font-size: 19px;
     line-height: 21px;
     height: 60px
@@ -4650,7 +4645,7 @@ textarea.input-group-sm > .form-control, textarea.input-group-sm > .input-group-
     background-color: transparent;
     background-image: none;
     border: 1px solid transparent;
-    border-radius: 4px
+    border-radius: 4px;
 }
 
 .navbar-toggle:focus {
@@ -4874,7 +4869,7 @@ textarea.input-group-sm > .form-control, textarea.input-group-sm > .input-group-
 }
 
 .navbar-default {
-    background-color: #2c3e50;
+    background-color: #000;
     border-color: transparent
 }
 
@@ -4883,7 +4878,7 @@ textarea.input-group-sm > .form-control, textarea.input-group-sm > .input-group-
 }
 
 .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
-    color: #18bc9c;
+    color: #;
     background-color: transparent
 }
 
@@ -4896,7 +4891,7 @@ textarea.input-group-sm > .form-control, textarea.input-group-sm > .input-group-
 }
 
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
-    color: #18bc9c;
+    color: #808080;
     background-color: transparent
 }
 
@@ -5378,7 +5373,6 @@ a.badge:hover, a.badge:focus {
 }
 
 .container .jumbotron, .container-fluid .jumbotron {
-    border-radius: 6px;
     padding-left: 15px;
     padding-right: 15px
 }
@@ -5391,7 +5385,7 @@ a.badge:hover, a.badge:focus {
 
 @media screen and (min-width: 768px) {
     .jumbotron {
-        padding-top: 48px;
+        padding-top: px;
         padding-bottom: 48px
     }
 
@@ -7414,26 +7408,26 @@ a.list-group-item-danger.active:hover, a.list-group-item-danger.active:focus {
 }
 
 .panel-default .close {
-    color: #2c3e50
+    color: #000;
 }
 
 .modal .close {
-    color: #2c3e50
+    color: #000;
 }
 
 .popover {
-    color: #2c3e50
+    color: #000;
 }
 
 #logo-size {
     height: 60px;
     width: 60px;
     float: left;
+
 }
 
-#bootstrap-override-h1 {
+#bootstrap-override-h4 {
     color: #FFF;
-    text-shadow: 2px 2px #000;
     text-align: center;
-    margin-top: 70px;
+    margin-top: 100px;
 }
